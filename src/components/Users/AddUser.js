@@ -2,9 +2,9 @@ import styles from './AddUser.module.css'
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 
-const AddUser = () => {
+const AddUser = (props) => {
 
-    const addUserHandler = (event) => {
+    const submitFormHandler = (event) => {
         event.preventDefault();
         const enteredUsername = event.target['username'].value;
         const enteredAge = event.target['age'].value;
@@ -14,14 +14,15 @@ const AddUser = () => {
         if (+enteredAge < 0) {
             return;
         }
-        console.log(enteredUsername, enteredAge);
+        const newUser = {'username': enteredUsername, 'age': enteredAge, 'id': Math.random().toString()}
+        props.onAddUser(newUser);
         event.target.reset();
 
     }
 
     return (
         <Card className={styles.input}>
-            <form onSubmit={addUserHandler}>
+            <form onSubmit={submitFormHandler}>
                 <label htmlFor="username">Username</label>
                 <input id={"username"} type={"text"}/>
                 <label htmlFor="age">Age (Years)</label>
